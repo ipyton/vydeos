@@ -1,0 +1,9 @@
+[submodule "blog_backend"]
+	path = blog_backend
+	url = https://github.com/ipyton/blog_backend.git
+[submodule "blog_frontend"]
+	path = blog_frontend
+	url = https://github.com/ipyton/blog.git
+[submodule "movie_service"]
+	path = movie_service
+	url = https://github.com/ipyton/MovieService.git
