@@ -7,3 +7,6 @@
 [submodule "movie_service"]
 	path = movie_service
 	url = https://github.com/ipyton/MovieService.git
+[submodule "user_registration_center"]
+	path = user_registration_center
+	url = https://github.com/ipyton/user_registration_center.git
