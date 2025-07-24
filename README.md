@@ -13,11 +13,11 @@ A full-stack movie community platform where users can browse, post, and discuss 
 
 ### Backend
 
-- **Flask (Python)** – RESTful API for fetching, scraping and processing data.
-- **Node.js (Express)** – RESTful API for user registration.  
-- **Spring Boot (Java)** – User auth, movie data, comments.
-- **Redis** – Caching, rate limiting, and hot content tracking  
+- **Flask (Python)** – RESTful API for user auth, movie data, comments, etc.  
+- **Spring Boot (Java)** – Microservices for modular architecture  
+- **Redis** – Caching, rate limiting, sequence number generation,and hot content tracking
 - **Kafka** – Event streaming and asynchronous logging  
+- **Node.js** – User routing and message endpoint scale up. 
 - **Cassandra** – Distributed storage for activity streams  
 - **MySQL (AWS RDS)** – Relational database for core data (users, movies, comments)  
 
@@ -49,29 +49,41 @@ movie-community/
 ├── scripts/ # Deployment and helper scripts
 └── README.md
 
-bash
-Copy
-Edit
-
 ## 🧪 Getting Started
 
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/movie-community.git
-cd movie-community
+git clone  -b release https://github.com/ipyton/vydeos_backend.git
+cd vydeos_backend
+```
 2. Run backend services via Docker
-bash
-Copy
-Edit
-docker-compose up --build
-3. Run frontend locally
-bash
-Copy
-Edit
+```bash
+docker-compose -f vydeos_backend/blog_backend/scripts/docker-compose/middleware up -d
+```
+
+3. Create the database schema and Kafka topics that needed. The schema is in vydeos_backend/blog_backend/scripts/DBSchema/ which is grouped by the domain. Kafka topics is automatically created, and you need to restart the application after creation. Make sure you allow automaitically topic creation in topic.
+4. Run the Movie Service, if you need movie searching service.
+```bash
+git clone -b release https://github.com/ipyton/MovieService.git
+cd vydeos_backend
+# create a venv for yourself before next steps
+pip install -f requirements.txt
+python app.py
+```
+5. Run the user registration service, it is critical for the realtime messaging function.
+```bash
+git clone -b release https://github.com/ipyton/user_registration_center.git
+cd user_registration_center
+```
+Note: You need to follow the readme in this project to start it up correctly
+6. Configure the nginx. This is a gateway for a single deployment. The configuration file is vydeos_backend/blog_backend/scripts/nginx/nginx.conf
+8. Run frontend locally
+```
 cd frontend
 npm install
 npm start
+```
 Note: You need Docker, Node.js, and Python installed for local development.
 
 📦 Data & APIs
@@ -92,8 +104,6 @@ Kafka is used for logging user interactions and powering feed algorithms
 
  Expand recommendation system with collaborative filtering or embeddings
 
-📸 Screenshots
-(Add screenshots here if available)
 
 🧑‍💻 Author
 Zhiheng Chen
